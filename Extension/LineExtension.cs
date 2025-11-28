@@ -2,7 +2,7 @@
 
 namespace Su.AutoCAD2Revit.Extension
 {
-    internal static class LineUtils
+    internal static class LineExtension
     {
         /// <summary>
         /// 获取线的中点

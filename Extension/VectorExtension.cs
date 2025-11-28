@@ -1,6 +1,6 @@
 ﻿namespace Su.AutoCAD2Revit.Extension
 {
-    internal static class VectorUtils
+    internal static class VectorExtension
     {
         /// <summary>
         /// 判断两向量是否平行(待测试)

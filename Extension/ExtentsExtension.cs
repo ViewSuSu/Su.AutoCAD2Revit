@@ -1,6 +1,6 @@
 ﻿namespace Su.AutoCAD2Revit.Extension
 {
-    internal static class ExtentsUtils
+    internal static class ExtentsExtension
     {
         /// <summary>
         /// 包围盒有重叠

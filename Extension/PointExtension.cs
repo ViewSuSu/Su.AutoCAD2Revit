@@ -5,7 +5,7 @@ namespace Su.AutoCAD2Revit.Extension
     /// <summary>
     /// Point
     /// </summary>
-    internal static class PointUtils
+    internal static class PointExtension
     {
         /// <summary>
         /// 返回不等比例变换矩阵
