@@ -5,7 +5,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace HYBIM.Revit.TransformerBase.Models
+//namespace Su.AutoCAD2Revit
 //{
 //    public class CADGeometryModelBase : CADModelBase
 //    {
@@ -16,7 +16,7 @@
 
 //        public CADGeometryModelBase(string layer, XYZ center, Transform transform, string blockName) : base(layer, transform, blockName)
 //        {
-//            Centroid=center;
+//            Centroid = center;
 //        }
 //    }
 //}

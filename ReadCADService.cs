@@ -64,7 +64,6 @@ namespace Su.AutoCAD2Revit
         }
 
 
-
         /// <summary>
         /// 取得该图纸中的所有文字信息
         /// </summary>

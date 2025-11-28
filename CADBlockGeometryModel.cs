@@ -1,7 +1,7 @@
 ﻿//using Autodesk.Revit.DB;
 //using Curve = Autodesk.Revit.DB.Curve;
 
-//namespace HYBIM.Revit.TransformerBase.Models
+//namespace Su.AutoCAD2Revit
 //{
 //    /// <summary>
 //    /// 图块内的几何

@@ -1,6 +1,6 @@
 ﻿//using Autodesk.Revit.DB;
 
-//namespace HYBIM.Revit.TransformerBase.Models
+//namespace Su.AutoCAD2Revit
 //{
 
 //    /// <summary>
@@ -21,7 +21,7 @@
 //        /// <summary>
 //        /// 获取Curves中最长的Curve
 //        /// </summary>
-//        /// <returns></returns>
+//        /// <returns></returns>a
 //        public Autodesk.Revit.DB.Curve MaxLengthCurve()
 //        {
 //            return Curves.OrderByDescending(x => x.Length).FirstOrDefault();

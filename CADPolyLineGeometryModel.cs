@@ -1,6 +1,6 @@
 ﻿//using Autodesk.Revit.DB;
 
-//namespace HYBIM.Revit.TransformerBase.Models
+//namespace Su.AutoCAD2Revit
 //{
 //    /// <summary>
 //    /// CAD的Polyline数据模型
