@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<UseWPF>true</UseWPF>
-		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>latest</LangVersion>
 		<Authors>Su</Authors>
 		<Version>1.0.0</Version>
@@ -113,6 +111,15 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
+	<Target Name="CopyLibFiles" AfterTargets="Build">
+		<ItemGroup>
+			<LibFiles Include="lib\**\*.*" />
+		</ItemGroup>
+		<Copy
+			SourceFiles="@(LibFiles)"
+			DestinationFolder="$(OutDir)%(RecursiveDir)"
+			SkipUnchangedFiles="true" />
+	</Target>
 	<Target Name="GenerateAddinFile" AfterTargets="PostBuildEvent" Condition="$([System.String]::Copy('$(Configuration)').Contains('D'))">
 		<PropertyGroup>
 			<AddinOutputPath>C:\ProgramData\Autodesk\Revit\Addins\$(RvtVersion)\</AddinOutputPath>

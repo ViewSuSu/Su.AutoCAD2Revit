@@ -12,10 +12,10 @@ namespace Su.AutoCAD2Revit.Extension
         /// 炸开所有的块（包括嵌套块）
         /// </summary>
         /// <param name="db"></param>
-        internal static void ExportBlocks(this Database db)
+        internal static void ExportBlocks(this Database db,string blockTableRecord)
         {
             bool continu = false;
-            using (Teigha.DatabaseServices.Transaction trans = db.TransactionManager.StartTransaction())
+            using (Transaction trans = db.TransactionManager.StartTransaction())
             {
                 using (LayerTable lt = (LayerTable)trans.GetObject(db.LayerTableId, OpenMode.ForWrite))
                 {
@@ -30,7 +30,7 @@ namespace Su.AutoCAD2Revit.Extension
                 }
 
                 BlockTable blockTable = (BlockTable)trans.GetObject(db.BlockTableId, OpenMode.ForWrite);
-                BlockTableRecord space = trans.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+                BlockTableRecord space = trans.GetObject(blockTable[blockTableRecord], OpenMode.ForWrite) as BlockTableRecord;
                 foreach (var id in space)
                 {
                     DBObject obj = trans.GetObject(id, OpenMode.ForWrite);
@@ -45,7 +45,7 @@ namespace Su.AutoCAD2Revit.Extension
             }
             if (continu)
             {
-                ExportBlocks(db);
+                ExportBlocks(db, blockTableRecord);
             }
         }
     }
