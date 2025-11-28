@@ -316,7 +316,7 @@
         /// <returns></returns>
         internal static Point3d GetPointInPolyline(this Polyline polyline)
         {
-            return PointUtils.GetPointInPolyline(polyline.GetPoint3ds());
+            return PointExtension.GetPointInPolyline(polyline.GetPoint3ds());
         }
 
         /// 获取多段线
@@ -394,7 +394,7 @@
         /// <returns></returns>
         internal static Arc GetArc(Point2d p1, Point2d p2, double bulge)
         {
-            Point2d center = PointUtils.GetArcBulgeCenter(p1, p2, bulge);
+            Point2d center = PointExtension.GetArcBulgeCenter(p1, p2, bulge);
             double angle1 = (p1 - center).Angle;
             double angle2 = (p2 - center).Angle;
             Arc arc = null;
@@ -444,12 +444,12 @@
             int curIndex = 0;
             for (int i = 0; i < curves.Count; i++)
             {
-                Point3d e = PointUtils.GetAnotherPoint(s, curves[i], tol);
+                Point3d e = PointExtension.GetAnotherPoint(s, curves[i], tol);
                 if (curves[i] is Arc arc)
                 {
                     double len = arc.GetDistAtPoint(arc.EndPoint);
                     Point3d midPt = arc.GetPointAtDist(len / 2);
-                    double dBulge = PointUtils.GetArcBulge(s.ToPoint2d(), midPt.ToPoint2d(), e.ToPoint2d());
+                    double dBulge = PointExtension.GetArcBulge(s.ToPoint2d(), midPt.ToPoint2d(), e.ToPoint2d());
                     pl.AddVertexAt(curIndex, s.ToPoint2d(), dBulge, 0, 0);
                     curIndex++;
                 }

@@ -55,7 +55,7 @@
         /// <returns></returns>
         internal static Point3d Center(this Extents3d extents)
         {
-            return PointUtils.MidPoint(extents.MinPoint, extents.MaxPoint);
+            return PointExtension.MidPoint(extents.MinPoint, extents.MaxPoint);
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Su.AutoCAD2Revit.Extension
         /// <returns></returns>
         internal static Point3d MidPoint(this Line line)
         {
-            return PointUtils.MidPoint(line.StartPoint, line.EndPoint);
+            return PointExtension.MidPoint(line.StartPoint, line.EndPoint);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Su.AutoCAD2Revit.Extension
         /// <returns></returns>
         internal static bool IsDiffSide(this Line line, Point3d p1, Point3d p2)
         {
-            return PointUtils.IsDiffSide(line.StartPoint, line.EndPoint, p1, p2);
+            return PointExtension.IsDiffSide(line.StartPoint, line.EndPoint, p1, p2);
         }
 
         /// <summary>
@@ -420,17 +420,17 @@ namespace Su.AutoCAD2Revit.Extension
                 return false;
 
             return (CurveExtension.IsPointInCurve(lineB, lineA.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineA.StartPoint, lineB.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineA.StartPoint, lineB.EndPoint, errorValue)
+                    !PointExtension.IsSamePoint(lineA.StartPoint, lineB.StartPoint, errorValue) &&
+                    !PointExtension.IsSamePoint(lineA.StartPoint, lineB.EndPoint, errorValue)
                     || CurveExtension.IsPointInCurve(lineB, lineA.EndPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineA.EndPoint, lineB.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineA.EndPoint, lineB.EndPoint, errorValue)
+                    !PointExtension.IsSamePoint(lineA.EndPoint, lineB.StartPoint, errorValue) &&
+                    !PointExtension.IsSamePoint(lineA.EndPoint, lineB.EndPoint, errorValue)
                     || CurveExtension.IsPointInCurve(lineA, lineB.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineB.StartPoint, lineA.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineB.StartPoint, lineA.EndPoint, errorValue)
+                    !PointExtension.IsSamePoint(lineB.StartPoint, lineA.StartPoint, errorValue) &&
+                    !PointExtension.IsSamePoint(lineB.StartPoint, lineA.EndPoint, errorValue)
                     || CurveExtension.IsPointInCurve(lineA, lineB.EndPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineB.EndPoint, lineA.StartPoint, errorValue) &&
-                    !PointUtils.IsSamePoint(lineB.EndPoint, lineA.EndPoint, errorValue)
+                    !PointExtension.IsSamePoint(lineB.EndPoint, lineA.StartPoint, errorValue) &&
+                    !PointExtension.IsSamePoint(lineB.EndPoint, lineA.EndPoint, errorValue)
                     || IsSameLine(lineA, lineB, errorValue));
         }
 
@@ -596,7 +596,7 @@ namespace Su.AutoCAD2Revit.Extension
         /// <returns></returns>
         internal static Point3d GetBarycenter(this Polyline polyline)
         {
-            return PointUtils.GetBarycenter(polyline.GetPoint3ds());
+            return PointExtension.GetBarycenter(polyline.GetPoint3ds());
         }
 
         /// <summary>
@@ -660,17 +660,17 @@ namespace Su.AutoCAD2Revit.Extension
             Point3d bToAPointE = lineA.GetClosestPointTo(lineB.EndPoint, true);
 
             return (CurveExtension.IsPointInCurve(lineB, aToBPointS, certainty) &&
-                    !PointUtils.IsSamePoint(aToBPointS, lineB.StartPoint, certainty) &&
-                    !PointUtils.IsSamePoint(aToBPointS, lineB.EndPoint, certainty)
+                    !PointExtension.IsSamePoint(aToBPointS, lineB.StartPoint, certainty) &&
+                    !PointExtension.IsSamePoint(aToBPointS, lineB.EndPoint, certainty)
                     || CurveExtension.IsPointInCurve(lineB, aToBPointE, certainty) &&
-                    !PointUtils.IsSamePoint(aToBPointE, lineB.StartPoint, certainty) &&
-                    !PointUtils.IsSamePoint(aToBPointE, lineB.EndPoint, certainty)
+                    !PointExtension.IsSamePoint(aToBPointE, lineB.StartPoint, certainty) &&
+                    !PointExtension.IsSamePoint(aToBPointE, lineB.EndPoint, certainty)
                     || CurveExtension.IsPointInCurve(lineA, bToAPointS, certainty) &&
-                    !PointUtils.IsSamePoint(bToAPointS, lineA.StartPoint, certainty) &&
-                    !PointUtils.IsSamePoint(bToAPointS, lineA.EndPoint, certainty)
+                    !PointExtension.IsSamePoint(bToAPointS, lineA.StartPoint, certainty) &&
+                    !PointExtension.IsSamePoint(bToAPointS, lineA.EndPoint, certainty)
                     || CurveExtension.IsPointInCurve(lineA, bToAPointE, certainty) &&
-                    !PointUtils.IsSamePoint(bToAPointE, lineA.StartPoint, certainty) &&
-                    !PointUtils.IsSamePoint(bToAPointE, lineA.EndPoint, certainty)
+                    !PointExtension.IsSamePoint(bToAPointE, lineA.StartPoint, certainty) &&
+                    !PointExtension.IsSamePoint(bToAPointE, lineA.EndPoint, certainty)
                     || IsSameLine(new Line(aToBPointS, aToBPointE), lineB, certainty));
         }
     }
