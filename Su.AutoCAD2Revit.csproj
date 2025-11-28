@@ -1,9 +1,145 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<LangVersion>latest</LangVersion>
+		<Authors>Su</Authors>
+		<Version>1.0.0</Version>
+		<Product>$(MSBuildProjectName)</Product>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Configurations>RVT_18;RVT_19;RVT_20;RVT_21;RVT_22;RVT_23;RVT_24;RVT_18_D;RVT_19_D;RVT_20_D;RVT_21_D;RVT_22_D;RVT_23_D;RVT_24_D;RVT_17_D;RVT_17;RVT_16;RVT_16_D;RVT_15;RVT_15_D;RVT_14;RVT_14_D;RVT_13;RVT_13_D;RVT_12;RVT_12_D;RVT_11;RVT_11_D</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('11'))">
+		<RvtVersion>2011</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('12'))">
+		<RvtVersion>2012</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('13'))">
+		<RvtVersion>2013</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('14'))">
+		<RvtVersion>2014</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('15'))">
+		<RvtVersion>2015</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('16'))">
+		<RvtVersion>2016</RvtVersion>
+		<TargetFramework>net45</TargetFramework>
+	</PropertyGroup>
 
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('17'))">
+		<RvtVersion>2017</RvtVersion>
+		<TargetFramework>net46</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('18'))">
+		<RvtVersion>2018</RvtVersion>
+		<TargetFramework>net46</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('19'))">
+		<RvtVersion>2019</RvtVersion>
+		<TargetFramework>net472</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('20'))">
+		<RvtVersion>2020</RvtVersion>
+		<TargetFramework>net472</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('21'))">
+		<RvtVersion>2021</RvtVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('22'))">
+		<RvtVersion>2022</RvtVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('23'))">
+		<RvtVersion>2023</RvtVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('24'))">
+		<RvtVersion>2024</RvtVersion>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="!$([System.String]::Copy('$(Configuration)').Contains('D'))">
+		<PackageId>$(MSBuildProjectName)</PackageId>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageDescription>This library uses Teigha 3.0.9 to parse AutoCAD files and generate Revit elements. It is intended for learning and reference purposes only. ⚠️ Note: For commercial use, please purchase a license from the ODA</PackageDescription>
+		<PackageTags>Revit;Revit-API;Teigha;C#;.NET</PackageTags>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>$(RvtVersion).$(Version)</Version>
+		<PackageOutputPath>$(SolutionDir)\Nuget\$(MSBuildProjectName)\</PackageOutputPath>
+		<RepositoryUrl>https://github.com/ViewSuSu/Su.AutoCAD2Revit</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageProjectUrl>https://github.com/ViewSuSu/Su.AutoCAD2Revit</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Nuget\**" />
+	  <EmbeddedResource Remove="Nuget\**" />
+	  <None Remove="Nuget\**" />
+	  <Page Remove="Nuget\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove=".gitignore" />
+	  <None Remove="LICENSE" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RvtVersion).0.0" PrivateAssets="All"> </PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="TD_Mgd">
+	    <HintPath>lib\TD_Mgd.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	<Target Name="GenerateAddinFile" AfterTargets="PostBuildEvent" Condition="$([System.String]::Copy('$(Configuration)').Contains('D'))">
+		<PropertyGroup>
+			<AddinOutputPath>C:\ProgramData\Autodesk\Revit\Addins\$(RvtVersion)\</AddinOutputPath>
+			<AddinFileName>$(TargetName).addin</AddinFileName>
+			<AddInGuid>$([System.Guid]::NewGuid())</AddInGuid>
+			<AddInName>$(Product)</AddInName>
+			<AddInName Condition="'$(AddInName)' == ''">$(TargetName)</AddInName>
+			<AddInName Condition="$(Configuration.Contains('D'))">$(AddInName)</AddInName>
+		</PropertyGroup>
+		<PropertyGroup>
+			<AddinFileContent>
+				&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+				&lt;RevitAddIns&gt;
+				&lt;AddIn Type="Application"&gt;
+				&lt;Name&gt;$(AddInName)&lt;/Name&gt;
+				&lt;Assembly&gt;$(ProjectDir)$(OutDir)$(TargetFileName)&lt;/Assembly&gt;
+				&lt;AddInId&gt;$(AddInGuid)&lt;/AddInId&gt;
+				&lt;FullClassName&gt;$(RootNamespace).App&lt;/FullClassName&gt;
+				&lt;VendorId&gt;ADSK&lt;/VendorId&gt;
+				&lt;VendorDescription&gt;Autodesk, www.autodesk.com&lt;/VendorDescription&gt;
+				&lt;/AddIn&gt;
+				&lt;/RevitAddIns&gt;
+			</AddinFileContent>
+		</PropertyGroup>
+		<MakeDir Directories="$(AddinOutputPath)" />
+		<WriteLinesToFile File="$(AddinOutputPath)$(AddinFileName)" Lines="$(AddinFileContent)" Overwrite="true" Encoding="UTF-8" />
+		<Message Text="AddIn file generated at $(AddinOutputPath)$(AddinFileName)" Importance="high" />
+		<Message Text="AddIn Name: $(AddInName) (Configuration: $(Configuration))" Importance="high" />
+	</Target>
 </Project>
