@@ -3,6 +3,9 @@ using Su.AutoCAD2Revit;
 
 namespace Su.AutoCAD2Revit
 {
+    /// <summary>
+    /// AutoCAD文本模型
+    /// </summary>
     public class CADTextModel : CADModelBase
     {
         /// <summary>
