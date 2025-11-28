@@ -126,7 +126,7 @@ namespace Su.AutoCAD2Revit
                         DBText text = (DBText)entity;
                         var dbLocation = text.Position.ToRevitPoint().Transform(importInstanceTransform).SetZ(levelHeight);
                         var dbCenter = text.GeometricExtents.Center().ToRevitPoint().Transform(importInstanceTransform).SetZ(levelHeight);
-                        CADTextModel model = new(dbLocation, dbCenter, text.TextString, text.Layer, text.Rotation, importInstanceTransform, text.BlockName);
+                        CADTextModel model = new(dbLocation, dbCenter, text.TextString, text.Layer, text.Rotation, text.BlockName);
                         listCADModels.Add(model);
                         break;
 
@@ -134,7 +134,7 @@ namespace Su.AutoCAD2Revit
                         MText mText = (MText)entity;
                         var mtLocation = mText.Location.ToRevitPoint().Transform(importInstanceTransform).SetZ(levelHeight);
                         var mtCenter = mText.GeometricExtents.Center().ToRevitPoint().Transform(importInstanceTransform).SetZ(levelHeight);
-                        CADTextModel acDbMTextModel = new(mtLocation, mtCenter, mText.Text, mText.Layer, mText.Rotation, importInstanceTransform, mText.BlockName);
+                        CADTextModel acDbMTextModel = new(mtLocation, mtCenter, mText.Text, mText.Layer, mText.Rotation, mText.BlockName);
                         listCADModels.Add(acDbMTextModel);
                         break;
                 }
@@ -515,6 +515,7 @@ namespace Su.AutoCAD2Revit
                 this.table.Dispose();
                 this.database.Dispose();
                 this.service.Dispose();
+                this.importInstanceTransform.Dispose();
             }
             catch (Exception ex)
             {
