@@ -34,5 +34,11 @@ namespace Su.AutoCAD2Revit
             Text = text;
             Angle = angle;
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"CADTextModel: {Text} @ {Location} (Layer: {Layer}, Angle: {Angle}, Block: {BlockName}),Layer: {Layer},Block: {BlockName}";
+        }
     }
 }

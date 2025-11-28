@@ -26,28 +26,22 @@ namespace Su.AutoCAD2Revit
         private readonly bool allowCPConversion;
         private readonly string password;
 
+
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="importInstance">链接的AutoCAD图纸</param>
+        /// <param name="levelHeightZ">图纸所在的绝对标高z</param>
         /// <param name="fileOpenMode"></param>
         /// <param name="blockTableRecord"></param>
         /// <param name="allowCPConversion"></param>
         /// <param name="password"></param>
-        public ReadCADService(ImportInstance importInstance, FileOpenMode fileOpenMode = FileOpenMode.OpenForReadAndWriteNoShare, string blockTableRecord = "*MODEL_SPACE", bool allowCPConversion = true, string password = "") : this(fileOpenMode, blockTableRecord, allowCPConversion, password)
+        public ReadCADService(ImportInstance importInstance, double levelHeightZ, FileOpenMode fileOpenMode = FileOpenMode.OpenForReadAndWriteNoShare, string blockTableRecord = "*MODEL_SPACE", bool allowCPConversion = true, string password = "") : this(fileOpenMode, blockTableRecord, allowCPConversion, password)
         {
             cacheDwgFile = Directory.GetParent(GetType().Assembly.Location).FullName + $"\\{Path.GetFileName(importInstance.GetCADPath())}";
             //Doc.GetCADPath(dwgElement).SmartCopyFile(cacheDwgFile);
             importInstanceTransform = importInstance.GetTransform();
-            Level importanLevel = importInstance.Document.GetElement(importInstance.LevelId) as Level;
-            if (importInstance.ViewSpecific)//仅当前视图可见
-            {
-                levelHeight = importanLevel.ProjectElevation;
-            }
-            else
-            {
-                levelHeight = importanLevel.ProjectElevation + importInstance.get_Parameter(BuiltInParameter.IMPORT_BASE_LEVEL_OFFSET).AsDouble();
-            }
+            levelHeight = levelHeightZ;
             Init();
         }
         /// <summary>
@@ -101,11 +95,6 @@ namespace Su.AutoCAD2Revit
             }
             this.table = (BlockTable)database.BlockTableId.GetObject(OpenMode.ForWrite);
             this.record = (BlockTableRecord)table[blockTableRecord].GetObject(OpenMode.ForWrite);
-        }
-
-        private ReadCADService()
-        {
-
         }
 
         private void DeleteCacheFile()

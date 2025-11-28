@@ -6,28 +6,25 @@
 		<Version>1.0.0</Version>
 		<Product>$(MSBuildProjectName)</Product>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Configurations>RVT_18;RVT_19;RVT_20;RVT_21;RVT_22;RVT_23;RVT_24;RVT_18_D;RVT_19_D;RVT_20_D;RVT_21_D;RVT_22_D;RVT_23_D;RVT_24_D;RVT_17_D;RVT_17;RVT_16;RVT_16_D;RVT_15;RVT_15_D;RVT_14;RVT_14_D;RVT_13;RVT_13_D;RVT_12;RVT_12_D;RVT_11;RVT_11_D</Configurations>
+		<Configurations>RVT_18;RVT_19;RVT_20;RVT_21;RVT_22;RVT_23;RVT_24;RVT_17;RVT_16;RVT_15;RVT_15_D;RVT_14;RVT_13</Configurations>
 	</PropertyGroup>
-	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('11'))">
-		<RvtVersion>2011</RvtVersion>
-		<TargetFramework>net45</TargetFramework>
-	</PropertyGroup>
-	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('12'))">
-		<RvtVersion>2012</RvtVersion>
-		<TargetFramework>net45</TargetFramework>
-	</PropertyGroup>
+
+	<!-- Revit 版本映射 -->
 	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('13'))">
 		<RvtVersion>2013</RvtVersion>
 		<TargetFramework>net45</TargetFramework>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('14'))">
 		<RvtVersion>2014</RvtVersion>
 		<TargetFramework>net45</TargetFramework>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('15'))">
 		<RvtVersion>2015</RvtVersion>
 		<TargetFramework>net45</TargetFramework>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="$([System.String]::Copy('$(Configuration)').Contains('16'))">
 		<RvtVersion>2016</RvtVersion>
 		<TargetFramework>net45</TargetFramework>
@@ -72,9 +69,19 @@
 		<RvtVersion>2024</RvtVersion>
 		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
-	<PropertyGroup Condition="!$([System.String]::Copy('$(Configuration)').Contains('D'))">
+
+	<!-- 把上一级 README.md 打包到包根目录 -->
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="README.md" />
+	</ItemGroup>
+
+	<!-- NuGet 包配置 -->
+	<PropertyGroup>
 		<PackageId>$(MSBuildProjectName)</PackageId>
+
+		<!-- NuGet 只能写包内路径，因此必须写文件名 -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+
 		<PackageDescription>This library uses Teigha 3.0.9 to parse AutoCAD files and generate Revit elements. It is intended for learning and reference purposes only. ⚠️ Note: For commercial use, please purchase a license from the ODA</PackageDescription>
 		<PackageTags>Revit;Teigha;C#;.NET</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -86,31 +93,33 @@
 		<PackageProjectUrl>https://github.com/ViewSuSu/Su.AutoCAD2Revit</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
+
+	<!-- 清理 Nuget 文件夹 -->
 	<ItemGroup>
-	  <Compile Remove="Nuget\**" />
-	  <EmbeddedResource Remove="Nuget\**" />
-	  <None Remove="Nuget\**" />
-	  <Page Remove="Nuget\**" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove=".gitignore" />
-	  <None Remove="LICENSE" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RvtVersion).0.0" PrivateAssets="All"> </PackageReference>
-	</ItemGroup>
-	<ItemGroup>
-	  <Reference Include="TD_Mgd">
-	    <HintPath>lib\TD_Mgd.dll</HintPath>
-	  </Reference>
+		<Compile Remove="Nuget\**" />
+		<EmbeddedResource Remove="Nuget\**" />
+		<None Remove="Nuget\**" />
+		<Page Remove="Nuget\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="README.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+		<None Remove=".gitignore" />
+		<None Remove="LICENSE" />
 	</ItemGroup>
+
+	<!-- 引用 Revit API -->
+	<ItemGroup>
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RvtVersion).0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<!-- 引用 Teigha DLL -->
+	<ItemGroup>
+		<Reference Include="TD_Mgd">
+			<HintPath>lib\TD_Mgd.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<!-- 构建后把 lib 文件复制到 OutDir -->
 	<Target Name="CopyLibFiles" AfterTargets="Build">
 		<ItemGroup>
 			<LibFiles Include="lib\**\*.*" />
@@ -120,15 +129,16 @@
 			DestinationFolder="$(OutDir)%(RecursiveDir)"
 			SkipUnchangedFiles="true" />
 	</Target>
+
+	<!-- 只在 Debug（含 D）生成 Addin 文件 -->
 	<Target Name="GenerateAddinFile" AfterTargets="PostBuildEvent" Condition="$([System.String]::Copy('$(Configuration)').Contains('D'))">
 		<PropertyGroup>
 			<AddinOutputPath>C:\ProgramData\Autodesk\Revit\Addins\$(RvtVersion)\</AddinOutputPath>
 			<AddinFileName>$(TargetName).addin</AddinFileName>
 			<AddInGuid>$([System.Guid]::NewGuid())</AddInGuid>
 			<AddInName>$(Product)</AddInName>
-			<AddInName Condition="'$(AddInName)' == ''">$(TargetName)</AddInName>
-			<AddInName Condition="$(Configuration.Contains('D'))">$(AddInName)</AddInName>
 		</PropertyGroup>
+
 		<PropertyGroup>
 			<AddinFileContent>
 				&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -144,9 +154,9 @@
 				&lt;/RevitAddIns&gt;
 			</AddinFileContent>
 		</PropertyGroup>
+
 		<MakeDir Directories="$(AddinOutputPath)" />
 		<WriteLinesToFile File="$(AddinOutputPath)$(AddinFileName)" Lines="$(AddinFileContent)" Overwrite="true" Encoding="UTF-8" />
-		<Message Text="AddIn file generated at $(AddinOutputPath)$(AddinFileName)" Importance="high" />
-		<Message Text="AddIn Name: $(AddInName) (Configuration: $(Configuration))" Importance="high" />
 	</Target>
+
 </Project>
