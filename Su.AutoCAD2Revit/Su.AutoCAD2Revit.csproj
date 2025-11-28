@@ -70,20 +70,27 @@
 		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
 
-	<!-- 把上一级 README.md 打包到包根目录 -->
+	<!-- 打包 .targets 文件到 build 目录 -->
 	<ItemGroup>
-		<None Include="..\README.md" Pack="true" PackagePath="README.md" />
+		<None Include="build\Su.AutoCAD2Revit.targets" Pack="true" PackagePath="build\" />
+	</ItemGroup>
+
+	<!-- 打包 lib 目录下的所有文件 -->
+	<ItemGroup>
+		<None Include="lib\**\*" Pack="true" PackagePath="lib\" />
+	</ItemGroup>
+
+	<!-- 把 README.md 打包到包根目录 -->
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<!-- NuGet 包配置 -->
 	<PropertyGroup>
 		<PackageId>$(MSBuildProjectName)</PackageId>
-
-		<!-- NuGet 只能写包内路径，因此必须写文件名 -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-
 		<PackageDescription>This library uses Teigha 3.0.9 to parse AutoCAD files and generate Revit elements. It is intended for learning and reference purposes only. ⚠️ Note: For commercial use, please purchase a license from the ODA</PackageDescription>
-		<PackageTags>Revit;Teigha;C#;.NET</PackageTags>
+		<PackageTags>Revit;AutoCAD;Teigha;DWG;CAD</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Version>$(RvtVersion).$(Version)</Version>
 		<PackageOutputPath>$(SolutionDir)\Nuget\$(MSBuildProjectName)\</PackageOutputPath>
@@ -94,15 +101,12 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
-	<!-- 清理 Nuget 文件夹 -->
+	<!-- 清理不需要的文件 -->
 	<ItemGroup>
 		<Compile Remove="Nuget\**" />
 		<EmbeddedResource Remove="Nuget\**" />
 		<None Remove="Nuget\**" />
 		<Page Remove="Nuget\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Remove=".gitignore" />
 		<None Remove="LICENSE" />
 	</ItemGroup>
@@ -112,51 +116,23 @@
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RvtVersion).0.0" PrivateAssets="All" />
 	</ItemGroup>
 
-	<!-- 引用 Teigha DLL -->
+	<!-- 本地引用 Teigha DLL -->
 	<ItemGroup>
 		<Reference Include="TD_Mgd">
 			<HintPath>lib\TD_Mgd.dll</HintPath>
+			<Private>true</Private>
 		</Reference>
 	</ItemGroup>
 
-	<!-- 构建后把 lib 文件复制到 OutDir -->
+	<!-- 构建后把 lib 文件复制到输出目录 -->
 	<Target Name="CopyLibFiles" AfterTargets="Build">
 		<ItemGroup>
-			<LibFiles Include="lib\**\*.*" />
+			<LibFiles Include="lib\**\*" />
 		</ItemGroup>
 		<Copy
-			SourceFiles="@(LibFiles)"
-			DestinationFolder="$(OutDir)%(RecursiveDir)"
-			SkipUnchangedFiles="true" />
-	</Target>
-
-	<!-- 只在 Debug（含 D）生成 Addin 文件 -->
-	<Target Name="GenerateAddinFile" AfterTargets="PostBuildEvent" Condition="$([System.String]::Copy('$(Configuration)').Contains('D'))">
-		<PropertyGroup>
-			<AddinOutputPath>C:\ProgramData\Autodesk\Revit\Addins\$(RvtVersion)\</AddinOutputPath>
-			<AddinFileName>$(TargetName).addin</AddinFileName>
-			<AddInGuid>$([System.Guid]::NewGuid())</AddInGuid>
-			<AddInName>$(Product)</AddInName>
-		</PropertyGroup>
-
-		<PropertyGroup>
-			<AddinFileContent>
-				&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-				&lt;RevitAddIns&gt;
-				&lt;AddIn Type="Application"&gt;
-				&lt;Name&gt;$(AddInName)&lt;/Name&gt;
-				&lt;Assembly&gt;$(ProjectDir)$(OutDir)$(TargetFileName)&lt;/Assembly&gt;
-				&lt;AddInId&gt;$(AddInGuid)&lt;/AddInId&gt;
-				&lt;FullClassName&gt;$(RootNamespace).App&lt;/FullClassName&gt;
-				&lt;VendorId&gt;ADSK&lt;/VendorId&gt;
-				&lt;VendorDescription&gt;Autodesk, www.autodesk.com&lt;/VendorDescription&gt;
-				&lt;/AddIn&gt;
-				&lt;/RevitAddIns&gt;
-			</AddinFileContent>
-		</PropertyGroup>
-
-		<MakeDir Directories="$(AddinOutputPath)" />
-		<WriteLinesToFile File="$(AddinOutputPath)$(AddinFileName)" Lines="$(AddinFileContent)" Overwrite="true" Encoding="UTF-8" />
+		  SourceFiles="@(LibFiles)"
+		  DestinationFolder="$(OutDir)%(RecursiveDir)"
+		  SkipUnchangedFiles="true" />
 	</Target>
 
 </Project>

@@ -1,11 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-	<!-- 自动引用 lib 下的 TD_Mgd.dll -->
+	<!-- 自动引用 TD_Mgd.dll -->
 	<ItemGroup>
 		<Reference Include="TD_Mgd">
 			<HintPath>$(MSBuildThisFileDirectory)..\lib\TD_Mgd.dll</HintPath>
 			<Private>true</Private>
+			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 	</ItemGroup>
+
+	<!-- 在每次构建后复制 lib 目录下的所有文件到输出目录 -->
+	<Target Name="CopyTeighaLibraryFiles" AfterTargets="Build">
+		<PropertyGroup>
+			<TeighaLibPath>$(MSBuildThisFileDirectory)..\lib\</TeighaLibPath>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<TeighaLibraryFiles Include="$(TeighaLibPath)**\*" />
+		</ItemGroup>
+
+		<Copy
+		  SourceFiles="@(TeighaLibraryFiles)"
+		  DestinationFolder="$(OutDir)%(RecursiveDir)"
+		  SkipUnchangedFiles="true" />
+
+	</Target>
+
+	<!-- 在清理时也清理这些库文件 -->
+	<Target Name="CleanTeighaLibraryFiles" AfterTargets="Clean">
+		<PropertyGroup>
+			<TeighaLibPath>$(MSBuildThisFileDirectory)..\lib\</TeighaLibPath>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<TeighaLibraryFiles Include="$(TeighaLibPath)**\*" />
+			<FilesToDelete Include="$(OutDir)%(TeighaLibraryFiles.RecursiveDir)%(TeighaLibraryFiles.Filename)%(TeighaLibraryFiles.Extension)" />
+		</ItemGroup>
+
+		<Delete Files="@(FilesToDelete)" ContinueOnError="true" />
+	</Target>
 
 </Project>
