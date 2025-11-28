@@ -1,10 +1,4 @@
 ﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Su.AutoCAD2Revit.Extension
 {
@@ -26,6 +20,7 @@ namespace Su.AutoCAD2Revit.Extension
             string filePath = ModelPathUtils.ConvertModelPathToUserVisiblePath(type.GetExternalFileReference().GetAbsolutePath());
             return filePath;
         }
+
         internal static XYZ ToRevitPoint(this Point3d point)
         {
             return new XYZ(point.X / 304.8, point.Y / 304.8, point.Z / 304.8);

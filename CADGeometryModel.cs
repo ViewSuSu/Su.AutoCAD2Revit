@@ -2,7 +2,6 @@
 
 //namespace Su.AutoCAD2Revit
 //{
-
 //    /// <summary>
 //    /// CAD的单一几何对象的Model
 //    /// </summary>
@@ -82,8 +81,6 @@
 //        //    }
 //        //    catch
 //        //    {
-
-
 //        //    }
 //        //    return null;
 //        //}

@@ -47,7 +47,6 @@
 //        ///// </summary>
 //        //public Curve MaxLengthCurve => Curves.MaxBy(x => x.Length).FirstOrDefault();
 
-
 //        ///// <summary>
 //        ///// 是否是直角多边形
 //        ///// </summary>

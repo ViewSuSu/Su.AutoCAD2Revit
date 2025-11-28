@@ -1,5 +1,4 @@
 ﻿using Autodesk.Revit.DB;
-using Su.AutoCAD2Revit;
 
 namespace Su.AutoCAD2Revit
 {

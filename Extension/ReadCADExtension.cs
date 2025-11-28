@@ -12,7 +12,7 @@ namespace Su.AutoCAD2Revit.Extension
         /// 炸开所有的块（包括嵌套块）
         /// </summary>
         /// <param name="db"></param>
-        internal static void ExportBlocks(this Database db,string blockTableRecord)
+        internal static void ExportBlocks(this Database db, string blockTableRecord)
         {
             bool continu = false;
             using (Transaction trans = db.TransactionManager.StartTransaction())

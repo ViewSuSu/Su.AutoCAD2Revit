@@ -1,9 +1,4 @@
 ﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Su.AutoCAD2Revit
 {
@@ -13,6 +8,7 @@ namespace Su.AutoCAD2Revit
         /// 图纸的Transform
         /// </summary>
         internal Transform ImportInstanceTransform { get; private set; }
+
         /// <summary>
         /// 图层
         /// </summary>
@@ -29,9 +25,9 @@ namespace Su.AutoCAD2Revit
             ImportInstanceTransform = importInstanceTransform;
             BlockName = blockName;
         }
+
         private CADModelBase()
         {
-
         }
     }
 }

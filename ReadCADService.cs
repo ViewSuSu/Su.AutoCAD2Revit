@@ -2,17 +2,12 @@
 using Su.AutoCAD2Revit.Extension;
 using System.IO;
 using Teigha.Runtime;
-using Arc = Teigha.DatabaseServices.Arc;
-using Ellipse = Teigha.DatabaseServices.Ellipse;
 using Entity = Teigha.DatabaseServices.Entity;
 using Exception = System.Exception;
-using Line = Teigha.DatabaseServices.Line;
 using Path = System.IO.Path;
-using Polyline = Teigha.DatabaseServices.Polyline;
 
 namespace Su.AutoCAD2Revit
 {
-
     /// <summary>
     /// AutoCAD2Revit图纸识别服务对象
     /// </summary>
@@ -20,6 +15,7 @@ namespace Su.AutoCAD2Revit
     {
         //图纸element
         private ImportInstance importInstance;
+
         private string cacheDwgFile;//缓存图纸的路径
         private Transform importInstanceTransform;//图纸的transform
         private double levelHeight = 0;//图纸的绝对标高z
@@ -47,7 +43,6 @@ namespace Su.AutoCAD2Revit
 
         private ReadCADService()
         {
-
         }
 
         private void DeleteCacheFile()
@@ -58,11 +53,8 @@ namespace Su.AutoCAD2Revit
             }
             catch
             {
-
-
             }
         }
-
 
         /// <summary>
         /// 取得该图纸中的所有文字信息
@@ -93,8 +85,6 @@ namespace Su.AutoCAD2Revit
                 }
                 catch (Exception ex)
                 {
-
-
                 }
                 using var trans = database.TransactionManager.StartTransaction();
                 using BlockTable table = (BlockTable)database.BlockTableId.GetObject(OpenMode.ForWrite);
@@ -111,6 +101,7 @@ namespace Su.AutoCAD2Revit
                             CADTextModel model = new CADTextModel(dbLocation, dbCenter, text.TextString, text.Layer, text.Rotation, importInstanceTransform, text.BlockName);
                             listCADModels.Add(model);
                             break;
+
                         case nameof(MText):
                             MText mText = (MText)entity;
                             var mtLocation = mText.Location.ToRevitPoint().Transform(importInstanceTransform).SetZ(levelHeight);
@@ -189,8 +180,6 @@ namespace Su.AutoCAD2Revit
         //        }
         //        catch (Exception ex)
         //        {
-
-
         //        }
         //        using var trans = database.TransactionManager.StartTransaction();
         //        using BlockTable table = (BlockTable)database.BlockTableId.GetObject(OpenMode.ForWrite);
@@ -236,7 +225,6 @@ namespace Su.AutoCAD2Revit
         //    return models;
         //}
 
-
         ///// <summary>
         ///// 获取CAD里的PolyLine几何
         ///// </summary>
@@ -263,8 +251,6 @@ namespace Su.AutoCAD2Revit
         //        }
         //        catch (Exception ex)
         //        {
-
-
         //        }
         //        using var trans = database.TransactionManager.StartTransaction();
         //        using BlockTable table = (BlockTable)database.BlockTableId.GetObject(OpenMode.ForRead);
@@ -380,7 +366,7 @@ namespace Su.AutoCAD2Revit
         //    }
         //    DeleteCacheFile();
         //    return models;
-        //} 
+        //}
 
         //private List<Autodesk.Revit.DB.Curve> CADCurveToRevitCurve(Teigha.DatabaseServices.Curve cadCurve, Matrix3d matrix3D = default)
         //{
@@ -483,20 +469,17 @@ namespace Su.AutoCAD2Revit
         //            }
         //            else if (item is Ellipse ellipse)
         //            {
-
         //            }
         //        }
         //    }
         //    return curves;
         //}
 
-
         /// <summary>
         /// AutoCAD点转Revit点
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-
 
         public void Dispose()
         {

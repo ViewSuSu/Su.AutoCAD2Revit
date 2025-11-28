@@ -76,7 +76,7 @@
 		<PackageId>$(MSBuildProjectName)</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageDescription>This library uses Teigha 3.0.9 to parse AutoCAD files and generate Revit elements. It is intended for learning and reference purposes only. ⚠️ Note: For commercial use, please purchase a license from the ODA</PackageDescription>
-		<PackageTags>Revit;Revit-API;Teigha;C#;.NET</PackageTags>
+		<PackageTags>Revit;Teigha;C#;.NET</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Version>$(RvtVersion).$(Version)</Version>
 		<PackageOutputPath>$(SolutionDir)\Nuget\$(MSBuildProjectName)\</PackageOutputPath>
